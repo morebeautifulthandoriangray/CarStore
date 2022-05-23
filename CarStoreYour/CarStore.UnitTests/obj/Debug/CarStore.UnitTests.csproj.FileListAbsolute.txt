@@ -1,0 +1,2 @@
+D:\Programming\ASP.NET\CarStore\CarStore.UnitTests\obj\Debug\CarStore.UnitTests.csproj.AssemblyReference.cache
+D:\Programming\ASP.NET\CarStore\CarStore.UnitTests\obj\Debug\CarStore.UnitTests.csproj.CoreCompileInputs.cache
