@@ -10,7 +10,7 @@ namespace CarStore.Domain.Entities
 {
     public class Car
     {
-        [HiddenInput(DisplayValue = false)]
+        //[HiddenInput(DisplayValue = false)]
         public int CarId { get; set; }
 
         [Display(Name = "Название")]

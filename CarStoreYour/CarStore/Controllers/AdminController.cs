@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using CarStore.Domain.Abstract;
 using CarStore.Domain.Concrete;
 using CarStore.Domain.Entities;
+using CarStore.Models;
 
 namespace CarStore.Controllers
 {
@@ -87,9 +88,27 @@ namespace CarStore.Controllers
             return View(from order in db.Orders select order);
         }
 
-        public ActionResult Details()
+        private IQueryable<CarDTO> SelectCustomersWithrders(string personId)
         {
-            return View(from car in db.Orders select car);
+            var orderForPerson = from o in db.OrderLines
+                                 join c in db.Cars on o.CarName equals c.CarId into temp1
+                                 from t1 in temp1.DefaultIfEmpty()
+                                 where o.PersonId == personId
+                                 select new CarDTO
+                                 {
+                                     CarId = o.CarName,
+                                     Category = t1.Category,
+                                     Description = t1.Description,
+                                     Name = t1.Name,
+                                     Price = t1.Price,
+                                     Quantity = o.Quantity
+                                 };
+            return orderForPerson;
+        }
+
+        public ActionResult Details(string personId)
+        {
+            return View(SelectCustomersWithrders(personId));
         }
 
     }

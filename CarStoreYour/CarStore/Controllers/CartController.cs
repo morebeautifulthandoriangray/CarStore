@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -70,42 +71,51 @@ namespace CarStore.Controllers
 
             //var order = new ShippingDetails();
             var carOrder = new CartLine();
-            if (cart.Lines.Count() == 0)
+            //cart.Lines().Count()
+            if (cart.lineCollection.Count() == 0)
             {
                 ModelState.AddModelError("", "Извините, ваша корзина пуста!");
             }
-
             if (ModelState.IsValid)
             {
                 orderProcessor.ProcessOrder(cart, shippingDetails);
 
+                var person = storeDB.Orders.FirstOrDefault<ShippingDetails>((client) => client.Line1.Equals(shippingDetails.Line1));
+                if(person == null)
+                {
+                    var newPerson = new ShippingDetails()
+                    {
+                        Line1 = shippingDetails.Line1,
+                        Line2 = shippingDetails.Line2,
+                        City = shippingDetails.City,
+                        Country = shippingDetails.Country,
+                        GiftWrap = shippingDetails.GiftWrap,
+                        Name = shippingDetails.Name
+                    };
+                    storeDB.Orders.Add(newPerson);
+                    storeDB.SaveChanges();
+                }
+
+                person = storeDB.Orders.FirstOrDefault<ShippingDetails>((client) => client.Line1.Equals(shippingDetails.Line1));
+
                 foreach (CartLine cartline in cart.lineCollection)
                 {
-                    ShippingDetails order = new ShippingDetails();
-                    order.Name = shippingDetails.Name;
-                    order.Line1 = shippingDetails.Line1;
-                    order.Line2 = shippingDetails.Line2;
-                    order.City = shippingDetails.City;
-                    order.Country = shippingDetails.Country;
-                    order.CarName = cartline.Car.CarId;
-                    order.Quantity = cartline.Quantity;
-                    storeDB.Orders.Add(order);
+                    OrderLines order = new OrderLines()
+                    {
+                        OrderLineId = 1,
+                        CarName = cartline.Car.CarId,
+                        Quantity = cartline.Quantity,
+                        PersonId = person.Line1
+                    };
+                    
+                    storeDB.OrderLines.Add(order);
 
+                    var car = storeDB.Cars.Find(cartline.Car.CarId);
+                    car.Quantity -= cartline.Quantity;
+                    storeDB.Entry(car).State = EntityState.Modified;
                 }
-                /*
-                order.Name = shippingDetails.Name;
-                order.Line1 = shippingDetails.Line1;
-                order.Line2 = shippingDetails.Line2;
-                order.City = shippingDetails.City;
-                order.Country = shippingDetails.Country;*/
-                // order.CarName = lineCollection
-
-
-                //storeDB.Orders.Add(order);
                 
-
                 storeDB.SaveChanges();
-
                 cart.Clear();
                 return View("Completed");
             }

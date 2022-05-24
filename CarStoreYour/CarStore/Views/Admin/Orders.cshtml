@@ -50,9 +50,20 @@
         </td>
         
         <td>
-            
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            
+
+            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+            @using (Ajax.BeginForm("Details", "Admin", new AjaxOptions
+            {
+                HttpMethod = "GET",
+                Url = "https://localhost:44319/Admin/Details"
+            }, new { @class = "form" }))
+            {
+                <input type="hidden" class="hidden_filds" name="personId"
+                       value="@item.Line1" />
+                <div class="button-inner">
+                    <button type="submit">Details</button>
+                </div>
+            }
         </td>
     </tr>
 }

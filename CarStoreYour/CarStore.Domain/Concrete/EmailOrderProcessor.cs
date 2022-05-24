@@ -85,8 +85,12 @@ namespace CarStore.Domain.Concrete
                 {
                     mailMessage.BodyEncoding = Encoding.UTF8;
                 }
-
-                smtpClient.Send(mailMessage);
+                try
+                {
+                    smtpClient.Send(mailMessage);
+                }
+                catch { }
+                
             }
         }
     }

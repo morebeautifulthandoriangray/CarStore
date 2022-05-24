@@ -16,10 +16,11 @@ namespace CarStore.Domain.Entities
         [Required(ErrorMessage = "Укажите как вас зовут")]
         public string Name { get; set; }
 
-        [Key]
+        
         [Required(ErrorMessage = "Вставьте email")]
         [Display(Name = "Адрес электронной почты")]
         [RegularExpression("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*", ErrorMessage = "Вы ввели некорректный email")]
+        [Key]
         public string Line1 { get; set; }
 
         [Required(ErrorMessage = "Вставьте номер телефона")]
@@ -39,9 +40,6 @@ namespace CarStore.Domain.Entities
         [Required(ErrorMessage = "Укажите страну")]
         [Display(Name = "Страна")]
         public string Country { get; set; }
-
-        public int CarName;
-        public int Quantity;
 
         public bool GiftWrap { get; set; }
     }

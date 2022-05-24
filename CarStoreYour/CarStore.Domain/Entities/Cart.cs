@@ -26,7 +26,9 @@ namespace CarStore.Domain.Entities
             }
             else
             {
+                lineCollection.Remove(line);
                 line.Quantity += quantity;
+                lineCollection.Add(line);
             }
         }
 
