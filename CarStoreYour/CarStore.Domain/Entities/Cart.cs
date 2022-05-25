@@ -59,5 +59,6 @@ namespace CarStore.Domain.Entities
     {
         public Car Car { get; set; }
         public int Quantity { get; set; }
+        public int? QuantityInDB { get; set; }
     }
 }

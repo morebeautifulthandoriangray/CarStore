@@ -8,20 +8,45 @@
 
 <table class="table">
     <thead>
-    <tr>
-        <th>Amount</th>
-        <th>car</th>
-        <th class="text-right">Price</th>
-        <th class="text-right">Total Price</th>
-    </tr>
+        <tr>
+            <th>car</th>
+            <th class="text-right">Price</th>
+            <th>Amount</th>
+            <th class="text-right">Edit</th>
+            <th>Amount in DB</th>
+            <th class="text-right">Total Price</th>
+        </tr>
     </thead>
     <tbody>
     @foreach (var line in Model.Cart.Lines)
     {
         <tr>
-            <td class="text-center">@line.Quantity</td>
             <td class="text-left">@line.Car.Name</td>
             <td class="text-right">@line.Car.Price.ToString("# руб")</td>
+            <td class="text-center">@line.Quantity</td>
+            <td>
+                @*TO DO: 
+                    -AJAX запросы для обновления количества
+                    -Скорее всего добавить корзину в сессию, чтобы было удобнее доставать всё и обновлять страницу
+                *@
+                @if (line.Quantity == 1)
+                {
+                    <button disabled>-</button>
+                }
+                else
+                {
+                    <button>-</button>
+                }
+                @if (line.QuantityInDB <= line.Quantity)
+                {
+                    <button disabled>+</button>
+                }
+                else
+                {
+                    <button>+</button>
+                }
+            </td>
+            <td>@line.QuantityInDB</td>
             <td class="text-right">
                 @((line.Quantity * line.Car.Price).ToString("# руб"))
             </td>

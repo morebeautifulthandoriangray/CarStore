@@ -24,11 +24,22 @@ namespace CarStore.Controllers
         }
         public ViewResult Index(Cart cart, string returnUrl)
         {
-            return View(new CartIndexViewModel
+            var cartNew = new Cart();
+            foreach(CartLine cartLine in cart.lineCollection)
             {
-                Cart = cart,
+                cartNew.lineCollection.Add(new CartLine()
+                {
+                    Car = cartLine.Car,
+                    Quantity = cartLine.Quantity,
+                    QuantityInDB = storeDB.Cars.Find(cartLine.Car.CarId).CarId
+                });
+            }
+            var cartIndexViewModel = new CartIndexViewModel()
+            {
+                Cart = cartNew,
                 ReturnUrl = returnUrl
-            });
+            };
+            return View(cartIndexViewModel);
         }
 
         public RedirectToRouteResult AddToCart(Cart cart, int carId, string returnUrl)
