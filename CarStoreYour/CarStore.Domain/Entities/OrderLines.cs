@@ -11,8 +11,9 @@ namespace CarStore.Domain.Entities
     {
         [Key]
         public int OrderLineId { get; set; }
-        public int CarName { get; set; }
+        public int? CarName { get; set; }
         public int Quantity { get; set; }
         public string PersonId { get; set; }
+        public int HistiryCarId { get; set; }
     }
 }

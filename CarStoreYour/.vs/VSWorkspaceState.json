@@ -3,11 +3,12 @@
     "",
     "\\CarStore",
     "\\CarStore.Domain",
+    "\\CarStore.Domain\\Concrete",
     "\\CarStore.Domain\\Entities",
     "\\CarStore\\Controllers",
     "\\CarStore\\Views",
     "\\CarStore\\Views\\Cart"
   ],
-  "SelectedNode": "\\CarStore\\Web.config",
+  "SelectedNode": "\\CarStore.Domain\\Concrete\\EFCarRepository.cs",
   "PreviewInSolutionExplorer": false
 }

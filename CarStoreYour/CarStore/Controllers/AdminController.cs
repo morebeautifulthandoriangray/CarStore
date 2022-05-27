@@ -91,12 +91,12 @@ namespace CarStore.Controllers
         private IQueryable<CarDTO> SelectCustomersWithrders(string personId)
         {
             var orderForPerson = from o in db.OrderLines
-                                 join c in db.Cars on o.CarName equals c.CarId into temp1
+                                 join c in db.HistoryCars on o.HistiryCarId equals c.Id into temp1
                                  from t1 in temp1.DefaultIfEmpty()
                                  where o.PersonId == personId
                                  select new CarDTO
                                  {
-                                     CarId = o.CarName,
+                                     CarId = o.HistiryCarId,
                                      Category = t1.Category,
                                      Description = t1.Description,
                                      Name = t1.Name,

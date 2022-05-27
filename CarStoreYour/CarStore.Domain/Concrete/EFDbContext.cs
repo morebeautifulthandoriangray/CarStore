@@ -14,7 +14,9 @@ namespace CarStore.Domain.Concrete
 
         public DbSet<ShippingDetails> Orders { get; set; }
 
-        public DbSet<OrderLines> OrderLines { get; set; }
+        public DbSet<HistoryCar> HistoryCars { get; set; }
 
+        public DbSet<OrderLines> OrderLines { get; set; }
+        
     }
 }

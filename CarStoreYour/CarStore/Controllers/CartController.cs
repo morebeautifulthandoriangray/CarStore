@@ -116,7 +116,8 @@ namespace CarStore.Controllers
                         OrderLineId = 1,
                         CarName = cartline.Car.CarId,
                         Quantity = cartline.Quantity,
-                        PersonId = person.Line1
+                        PersonId = person.Line1,
+                        HistiryCarId = cartline.Car.CarId
                     };
                     
                     storeDB.OrderLines.Add(order);
