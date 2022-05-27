@@ -156,6 +156,7 @@
     <Compile Include="Infrastructure\Concrete\FormAuthProvider.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\CarDTO.cs" />
+    <Compile Include="Models\CarForSession.cs" />
     <Compile Include="Models\CarsListViewModel.cs" />
     <Compile Include="Models\CartIndexViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />

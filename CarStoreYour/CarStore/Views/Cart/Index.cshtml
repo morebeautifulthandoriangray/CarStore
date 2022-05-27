@@ -25,9 +25,9 @@
             <td class="text-right">@line.Car.Price.ToString("# руб")</td>
             <td class="text-center">@line.Quantity</td>
             <td>
-                @*TO DO: 
-                    -AJAX запросы для обновления количества
-                    -Скорее всего добавить корзину в сессию, чтобы было удобнее доставать всё и обновлять страницу
+                @*TO DO:
+        -AJAX запросы для обновления количества
+        -Скорее всего добавить корзину в сессию, чтобы было удобнее доставать всё и обновлять страницу
                 *@
                 @if (line.Quantity == 1)
                 {
@@ -35,7 +35,18 @@
                 }
                 else
                 {
-                    <button>-</button>
+                    using (Ajax.BeginForm("MinusQuantityCarInSession", "Cart", new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        Url = "https://localhost:44319/Cart/MinusQuantityCarInSession"
+                    }))
+                    {
+                        <input type="hidden" class="hidden_filds" name="id_car"
+                               value="@line.Car.CarId">
+                        <input type="hidden" class="hidden_filds" name="id_quantity" value="@line.Quantity">
+                        <button>-</button>
+                    }
+
                 }
                 @if (line.QuantityInDB <= line.Quantity)
                 {
@@ -43,7 +54,19 @@
                 }
                 else
                 {
-                    <button>+</button>
+                    using (Ajax.BeginForm("AddQuantityCarInSession", "Cart", new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        Url = "https://localhost:44319/Cart/AddQuantityCarInSession"
+                    }))
+                    {
+                        <input type="hidden" class="hidden_filds" name="id_car"
+                               value="@line.Car.CarId">
+                        <input type="hidden" class="hidden_filds" name="id_quantity" value="@line.Quantity">
+                        //Где взять RETURNURL
+                        <button type="submit">+</button>
+                    }
+
                 }
             </td>
             <td>@line.QuantityInDB</td>

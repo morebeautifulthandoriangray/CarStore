@@ -25,12 +25,14 @@ namespace CarStore.Controllers
         public ViewResult Index(Cart cart, string returnUrl)
         {
             var cartNew = new Cart();
-            foreach(CartLine cartLine in cart.lineCollection)
+            var arrayList = (List<CarForSession>)Session["list_cars"];
+            foreach (CartLine cartLine in cart.lineCollection)
             {
                 cartNew.lineCollection.Add(new CartLine()
                 {
                     Car = cartLine.Car,
-                    Quantity = cartLine.Quantity,
+                    //ВОТ СЮДА ВЫТРЯХИВАТЬ ИЗ СЕССИИ КОЛИЧЕСТВО
+                    Quantity = arrayList.Find(item => item.Id == cartLine.Car.CarId).Quantity,
                     QuantityInDB = storeDB.Cars.Find(cartLine.Car.CarId).CarId
                 });
             }
@@ -50,7 +52,74 @@ namespace CarStore.Controllers
             if (car != null)
             {
                 cart.AddItem(car, 1);
+                /*CarForSession carForSession = new CarForSession()
+                {
+                    Id = car.CarId,
+                    Quantity = 1
+                };*/
+                if (Session["list_cars"] == null)
+                {
+                    CarForSession carForSession = new CarForSession()
+                    {
+                        Id = car.CarId,
+                        Quantity = 1
+                    };
+                    List<CarForSession> arrayProducts = new List<CarForSession>();
+                    arrayProducts.Add(carForSession);
+                    Session["list_cars"] = arrayProducts;
+                }
+                else
+                {
+                    var listCars = (List<CarForSession>)Session["list_cars"];
+                    var carForSession = listCars.Find(item => item.Id == car.CarId);
+                    if(carForSession == null)
+                    {
+                        carForSession = new CarForSession()
+                        {
+                            Id = car.CarId,
+                            Quantity = 1
+                        };
+                    }
+                    else
+                    {
+                        carForSession.Quantity = carForSession.Quantity + 1;
+                    }
+                    listCars.Add(carForSession);
+                    Session["list_cars"] = listCars;
+                }
             }
+            return RedirectToAction("Index", new { returnUrl });
+        }
+
+        [HttpPost]
+        public ActionResult AddQuantityCarInSession(int id_car, int id_quantity, string returnUrl)
+        {
+            int quantity = id_quantity + 1;
+            var arrayList = (List<CarForSession>)Session["list_cars"];
+            foreach (CarForSession car in arrayList)
+            {
+                if (car.Id == id_car)
+                {
+                    car.Quantity = quantity;
+                }
+            }
+            Session["list_cars"] = arrayList;
+            return RedirectToAction("Index", new { returnUrl});
+        }
+
+        [HttpPost]
+        public ActionResult MinusQuantityCarInSession(int id_car, int id_quantity, string returnUrl)
+        {
+            int quantity = id_quantity - 1;
+            var arrayList = (List<CarForSession>)Session["list_cars"];
+            foreach (CarForSession car in arrayList)
+            {
+                if (car.Id == id_car)
+                {
+                    car.Quantity = quantity;
+                }
+            }
+            Session["list_cars"] = arrayList;
             return RedirectToAction("Index", new { returnUrl });
         }
 
@@ -108,14 +177,14 @@ namespace CarStore.Controllers
                 }
 
                 person = storeDB.Orders.FirstOrDefault<ShippingDetails>((client) => client.Line1.Equals(shippingDetails.Line1));
-
+                var arrayList = (List<CarForSession>)Session["list_cars"];
                 foreach (CartLine cartline in cart.lineCollection)
                 {
                     OrderLines order = new OrderLines()
                     {
                         OrderLineId = 1,
                         CarName = cartline.Car.CarId,
-                        Quantity = cartline.Quantity,
+                        Quantity = arrayList.Find(item => item.Id == cartline.Car.CarId).Quantity,
                         PersonId = person.Line1,
                         HistiryCarId = cartline.Car.CarId
                     };
@@ -123,12 +192,13 @@ namespace CarStore.Controllers
                     storeDB.OrderLines.Add(order);
 
                     var car = storeDB.Cars.Find(cartline.Car.CarId);
-                    car.Quantity -= cartline.Quantity;
+                    car.Quantity -= order.Quantity;
                     storeDB.Entry(car).State = EntityState.Modified;
                 }
                 
                 storeDB.SaveChanges();
                 cart.Clear();
+                Session["list_cars"] = null;
                 return View("Completed");
             }
             else
