@@ -33,7 +33,7 @@ namespace CarStore.Controllers
                     Car = cartLine.Car,
                     //ВОТ СЮДА ВЫТРЯХИВАТЬ ИЗ СЕССИИ КОЛИЧЕСТВО
                     Quantity = arrayList.Find(item => item.Id == cartLine.Car.CarId).Quantity,
-                    QuantityInDB = storeDB.Cars.Find(cartLine.Car.CarId).CarId
+                    QuantityInDB = storeDB.Cars.Find(cartLine.Car.CarId).Quantity
                 });
             }
             var cartIndexViewModel = new CartIndexViewModel()
@@ -137,7 +137,21 @@ namespace CarStore.Controllers
 
         public PartialViewResult Summary(Cart cart)
         {
-            return PartialView(cart);
+            var arrayList = (List<CarForSession>)Session["list_cars"];
+            Cart cartNew = new Cart();
+            if(arrayList != null)
+            {
+                foreach (CarForSession carForSession in arrayList)
+                {
+                    CartLine cartLine = new CartLine()
+                    {
+                        Car = storeDB.Cars.Find(carForSession.Id),
+                        Quantity = arrayList.Find(item => item.Id == carForSession.Id).Quantity
+                    };
+                    cartNew.lineCollection.Add(cartLine);
+                }
+            }
+            return PartialView(cartNew);
         }
 
         public ViewResult Checkout()

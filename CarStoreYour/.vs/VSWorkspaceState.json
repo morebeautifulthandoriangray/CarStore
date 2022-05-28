@@ -9,6 +9,6 @@
     "\\CarStore\\Views",
     "\\CarStore\\Views\\Cart"
   ],
-  "SelectedNode": "\\CarStore.Domain\\Concrete\\EFCarRepository.cs",
+  "SelectedNode": "\\CarStore\\Controllers\\CartController.cs",
   "PreviewInSolutionExplorer": false
 }

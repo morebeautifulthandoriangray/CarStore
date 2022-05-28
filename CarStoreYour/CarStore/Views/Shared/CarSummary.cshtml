@@ -1,4 +1,5 @@
-﻿@model CarStore.Domain.Entities.Car
+﻿@using CarStore.Models
+@model CarStore.Domain.Entities.Car
 
 
 <div class="well">
@@ -22,7 +23,23 @@
             <div class="pull-right">
                 @Html.HiddenFor(x => x.CarId)
                 @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-                <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+                @{ 
+                    bool head = false;
+                    var carList = (List<CarForSession>)Session["list_cars"];
+                    if(carList != null)
+                    {
+                        var car = carList.Find(item => item.Id == Model.CarId);
+                        if (car != null) { head = true; }
+                    }
+                }
+                @if(head == true)
+                {
+                    <input type="submit" class="btn btn-success" value="Товар уже в корзине" disabled/>
+                }
+                else
+                {
+                    <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+                }
             </div>
         }
     }
