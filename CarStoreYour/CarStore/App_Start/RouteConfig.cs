@@ -11,6 +11,12 @@ namespace CarStore
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            Route route = new Route(
+              "{controller}/{action}",
+              new RouteValueDictionary(new { Controller = "Account", Action = "Login" }),
+              new MvcRouteHandler());
+            routes.Add("Default", route);
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(null,

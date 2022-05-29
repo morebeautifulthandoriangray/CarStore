@@ -11,7 +11,6 @@ using CarStore.Models;
 
 namespace CarStore.Controllers
 {
-    [Authorize]
     public class AdminController : Controller
     {
         ICarRepository repository;
@@ -26,7 +25,7 @@ namespace CarStore.Controllers
        
 
         
-
+        [HttpGet]
         public ViewResult Index()
         {
             return View(repository.Cars);

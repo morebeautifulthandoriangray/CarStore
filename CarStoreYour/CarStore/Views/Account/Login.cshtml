@@ -7,22 +7,26 @@
 
 <div class="panel">
     <div class="panel-heading">
-        <h3>Вход в систему</h3>
+        <h3>Авторизация</h3>
     </div>
     <div class="panel-body">
-        <p class="lead">Пожалуйста, войдите в систему, чтобы получить доступ к админ. панели:</p>
+        <p class="lead"></p>
         @using (Html.BeginForm())
         {
             @Html.ValidationSummary()
             <div class="form-group">
-                <label>Имя пользователя:</label>
-                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                <label>Логин:</label>
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "user@mail.ru" })
             </div>
             <div class="form-group">
                 <label>Пароль:</label>
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
             </div>
-            <input type="submit" value="Войти" class="btn btn-primary" />
+            <input type="submit" name="action" value="Войти" class="btn btn-primary" />
+            @Ajax.ActionLink("Зарегистрироваться", "Registration", "Account", new AjaxOptions
+             {
+                HttpMethod = "GET"
+            })
         }
     </div>
 </div>

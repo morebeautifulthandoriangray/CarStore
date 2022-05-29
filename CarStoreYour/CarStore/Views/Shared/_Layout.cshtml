@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using CarStore.Domain.Entities
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -9,17 +10,30 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
+    @{
+        ShippingDetails person = (ShippingDetails)Session["user"];
+    }
     <div class="navbar navbar-inverse" role="navigation">
         <a class="navbar-brand" href="#">CarStore - магазин крутых тачек</a>
+        @if (@person.IsAdmin == true)
+        {
+            @Ajax.ActionLink("Админская панель", "Index", "Admin", new AjaxOptions
+             {
+                HttpMethod = "GET"
+            })
+        }
+
+        @*@Html.Action("Index", "Admin");*@
+
         @Html.Action("Summary", "Cart")
     </div>
-<div class="row panel">
-    <div id="categories" class="col-xs-3">
-        @Html.Action("Menu", "Nav")
+    <div class="row panel">
+        <div id="categories" class="col-xs-3">
+            @Html.Action("Menu", "Nav")
+        </div>
+        <div class="col-xs-8">
+            @RenderBody()
+        </div>
     </div>
-    <div class="col-xs-8">
-        @RenderBody()
-    </div>
-</div>
 </body>
 </html>

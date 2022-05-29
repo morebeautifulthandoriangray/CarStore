@@ -1,4 +1,5 @@
-﻿@model CarStore.Domain.Entities.ShippingDetails
+﻿@using CarStore.Domain.Entities
+@model CarStore.Domain.Entities.ShippingDetails
 
 @{
     ViewBag.Title = "CarStore: форма заказа";
@@ -7,34 +8,37 @@
 <h2>Оформить заказ сейчас</h2>
 <p>Пожалуйста введи ваши контактные данные, и мы сразу отправим машину!</p>
 
-
+@{
+        ShippingDetails person = (ShippingDetails)Session["user"];
+}
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary();
     <h3>Данные</h3>
+
     <div class="form-group">
         <label>Ваше ФИО:</label>
-        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder =person.Name, @disabled = "true" })
     </div>
 
     <div class="form-group">
         <label>Ваш email</label>
-        @Html.TextBoxFor(x => x.Line1, new { @class = "form-control" })
+        @Html.TextBoxFor(x => x.Line1, new { @class = "form-control", @placeholder = person.Line1, @disabled = "true" })
     </div>
 
     <div class="form-group">
         <label>Ваш номер телефона</label>
-        @Html.TextBoxFor(x => x.Line2, new { @class = "form-control" })
+        @Html.TextBoxFor(x => x.Line2, new { @class = "form-control", @placeholder = person.Line2, @disabled = "true" })
     </div>
 
     <div class="form-group">
         <label>Город</label>
-        @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+        @Html.TextBoxFor(x => x.City, new { @class = "form-control", @placeholder = person.City, @disabled = "true" })
     </div>
 
     <div class="form-group">
         <label>Страна</label>
-        @Html.TextBoxFor(x => x.Country, new { @class = "form-control" })
+        @Html.TextBoxFor(x => x.Country, new { @class = "form-control", @placeholder = person.Country, @disabled = "true" })
     </div>
 
     @*

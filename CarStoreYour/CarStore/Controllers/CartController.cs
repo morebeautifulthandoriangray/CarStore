@@ -170,11 +170,11 @@ namespace CarStore.Controllers
             {
                 ModelState.AddModelError("", "Извините, ваша корзина пуста!");
             }
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 orderProcessor.ProcessOrder(cart, shippingDetails);
 
-                var person = storeDB.Orders.FirstOrDefault<ShippingDetails>((client) => client.Line1.Equals(shippingDetails.Line1));
+                var person = (ShippingDetails)Session["user"];
                 if(person == null)
                 {
                     var newPerson = new ShippingDetails()
@@ -190,7 +190,7 @@ namespace CarStore.Controllers
                     storeDB.SaveChanges();
                 }
 
-                person = storeDB.Orders.FirstOrDefault<ShippingDetails>((client) => client.Line1.Equals(shippingDetails.Line1));
+                person = (ShippingDetails)Session["user"];
                 var arrayList = (List<CarForSession>)Session["list_cars"];
                 foreach (CartLine cartline in cart.lineCollection)
                 {
@@ -214,11 +214,11 @@ namespace CarStore.Controllers
                 cart.Clear();
                 Session["list_cars"] = null;
                 return View("Completed");
-            }
-            else
-            {
-                return View(shippingDetails);
-            }
+            //}
+            //else
+            //{
+               // return View(shippingDetails);
+            //}
         }
 
     }

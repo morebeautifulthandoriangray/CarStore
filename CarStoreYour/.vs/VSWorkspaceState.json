@@ -7,8 +7,8 @@
     "\\CarStore.Domain\\Entities",
     "\\CarStore\\Controllers",
     "\\CarStore\\Views",
-    "\\CarStore\\Views\\Cart"
+    "\\CarStore\\Views\\Cart",
+    "\\CarStore\\Views\\Nav"
   ],
-  "SelectedNode": "\\CarStore\\Controllers\\CartController.cs",
   "PreviewInSolutionExplorer": false
 }
