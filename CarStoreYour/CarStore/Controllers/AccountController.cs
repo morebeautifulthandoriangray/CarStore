@@ -25,6 +25,32 @@ namespace CarStore.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Registration(ShippingDetails shippingDetails) {
+            if (ModelState.IsValid)
+            {
+                var newPerson = new ShippingDetails()
+                {
+                    Line1 = shippingDetails.Line1,
+                    Line2 = shippingDetails.Line2,
+                    City = shippingDetails.City,
+                    Country = shippingDetails.Country,
+                    GiftWrap = shippingDetails.GiftWrap,
+                    Name = shippingDetails.Name,
+                    IsAdmin = false,
+                    Password = shippingDetails.Password
+                };
+                storeDB.Orders.Add(newPerson);
+                storeDB.SaveChanges();
+                Session["user"] = newPerson;
+                return Redirect(Url.Action("List", "Car"));
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         public ViewResult Login()
         {
             return View();

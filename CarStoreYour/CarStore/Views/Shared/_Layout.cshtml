@@ -4,12 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css"/>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
 </head>
-<body>
+<body style="padding-top:0">
     @{
         ShippingDetails person = (ShippingDetails)Session["user"];
     }
@@ -18,9 +19,9 @@
         @if (@person.IsAdmin == true)
         {
             @Ajax.ActionLink("Админская панель", "Index", "Admin", new AjaxOptions
-             {
-                HttpMethod = "GET"
-            })
+       {
+           HttpMethod = "GET"
+       })
         }
 
         @*@Html.Action("Index", "Admin");*@

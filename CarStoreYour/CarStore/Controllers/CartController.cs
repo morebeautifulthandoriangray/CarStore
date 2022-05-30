@@ -95,6 +95,8 @@ namespace CarStore.Controllers
         public ActionResult AddQuantityCarInSession(int id_car, int id_quantity, string returnUrl)
         {
             int quantity = id_quantity + 1;
+            var carDB = storeDB.Cars.Find(id_car);
+            if (quantity > carDB.Quantity) quantity = carDB.Quantity;
             var arrayList = (List<CarForSession>)Session["list_cars"];
             foreach (CarForSession car in arrayList)
             {
@@ -111,6 +113,7 @@ namespace CarStore.Controllers
         public ActionResult MinusQuantityCarInSession(int id_car, int id_quantity, string returnUrl)
         {
             int quantity = id_quantity - 1;
+            if (quantity < 1) quantity = 1;
             var arrayList = (List<CarForSession>)Session["list_cars"];
             foreach (CarForSession car in arrayList)
             {

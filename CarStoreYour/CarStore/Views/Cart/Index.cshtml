@@ -23,10 +23,10 @@
             <td class="text-left">@line.Car.Name</td>
             <td class="text-right">@line.Car.Price.ToString("# руб")</td>
             <td class="text-center">@line.Quantity</td>
-            <td>
+            <td style="display:flex; justify-content:space-evenly">
                 @if (line.Quantity == 1)
                 {
-                    <button disabled>-</button>
+                    <button  class="btn btn-default btn-primary selected" disabled>-</button>
                 }
                 else
                 {
@@ -34,18 +34,18 @@
                     {
                         HttpMethod = "POST",
                         Url = "https://localhost:44319/Cart/MinusQuantityCarInSession"
-                    }))
+                    }, new { style="width:30%;"}))
                     {
                         <input type="hidden" class="hidden_filds" name="id_car"
                                value="@line.Car.CarId">
                         <input type="hidden" class="hidden_filds" name="id_quantity" value="@line.Quantity">
-                        <button>-</button>
+                        <button  class="btn btn-default btn-primary selected">-</button>
                     }
 
                 }
                 @if (line.QuantityInDB <= line.Quantity)
                 {
-                    <button disabled>+</button>
+                    <button  class="btn btn-default btn-primary selected" disabled>+</button>
                 }
                 else
                 {
@@ -53,12 +53,12 @@
                     {
                         HttpMethod = "POST",
                         Url = "https://localhost:44319/Cart/AddQuantityCarInSession"
-                    }))
+                    }, new { style = "width:30%;" }))
                     {
                         <input type="hidden" class="hidden_filds" name="id_car"
                                value="@line.Car.CarId">
                         <input type="hidden" class="hidden_filds" name="id_quantity" value="@line.Quantity">
-                        <button type="submit">+</button>
+                        <button class="btn btn-default btn-primary selected" type="submit">+</button>
                     }
 
                 }

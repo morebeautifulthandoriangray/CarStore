@@ -43,6 +43,9 @@ namespace CarStore.Domain.Entities
 
         public bool GiftWrap { get; set; }
         public bool IsAdmin { get; set; }
+
+        [Required(ErrorMessage = "Укажите пароль")]
+        [Display(Name = "Пароль")]
         public string Password { get; set; }
     }
 }
