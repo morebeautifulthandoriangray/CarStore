@@ -12,12 +12,12 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 @{
-    List<DateTime> dateTimes = new List<DateTime>();
+    List<string> dateTimes = new List<string>();
     foreach(var item in Model)
     {
-        dateTimes.Add(item.dateTime);
+        dateTimes.Add(item.dateTime.ToString("u"));
     }
-    var dateList = dateTimes.Distinct<DateTime>();
+    var dateList = dateTimes.Distinct<string>();
     }
 @foreach (var datetime in @dateList)
     {
@@ -34,7 +34,7 @@
 
     @foreach (var item in Model)
     {
-        if (DateTime.Compare(item.dateTime, datetime) == 0)
+        if (item.dateTime.ToString("u").Equals(datetime) == true)
         {
         <tr>
             <td>
