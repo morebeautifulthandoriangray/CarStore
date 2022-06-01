@@ -100,7 +100,8 @@ namespace CarStore.Controllers
                                      Description = t1.Description,
                                      Name = t1.Name,
                                      Price = t1.Price,
-                                     Quantity = o.Quantity
+                                     Quantity = o.Quantity,
+                                     dateTime = o.dateTime
                                  };
             return orderForPerson;
         }

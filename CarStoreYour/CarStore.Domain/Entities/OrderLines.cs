@@ -15,5 +15,6 @@ namespace CarStore.Domain.Entities
         public int Quantity { get; set; }
         public string PersonId { get; set; }
         public int HistiryCarId { get; set; }
+        public DateTime dateTime { get; set; }
     }
 }

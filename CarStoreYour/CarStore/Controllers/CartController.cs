@@ -203,7 +203,8 @@ namespace CarStore.Controllers
                         CarName = cartline.Car.CarId,
                         Quantity = arrayList.Find(item => item.Id == cartline.Car.CarId).Quantity,
                         PersonId = person.Line1,
-                        HistiryCarId = cartline.Car.CarId
+                        HistiryCarId = cartline.Car.CarId,
+                        dateTime = DateTime.Now
                     };
                     
                     storeDB.OrderLines.Add(order);

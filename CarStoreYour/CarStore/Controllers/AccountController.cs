@@ -63,6 +63,8 @@ namespace CarStore.Controllers
             if (ModelState.IsValid)
             {
                 bool isSessionNew = Session.IsNewSession;
+                Session["user"] = null;
+                Session["list_cars"] = null;
                 ShippingDetails person = storeDB.Orders.Find(model.UserName.ToString());
                 if (person != null && CheckPassword(model.Password, person.Password))
                 {
